@@ -1,10 +1,10 @@
 import './App.css';
-import Navbar from "./Navbar";
+import Canvas from "./Canvas";
 
 function App() {
   return (
     <div className="App">
-      <Navbar/>
+      <Canvas className="canvas"/>
     </div>
   );
 }
