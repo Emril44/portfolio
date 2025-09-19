@@ -13,6 +13,8 @@ const Canvas = props => {
     const directions = ['up', 'down', 'left', 'right'];
 
     useEffect(() => {
+        let animationId;
+
         const canvas =  canvasRef.current;
         const context = canvas.getContext("2d");
         canvas.width = window.innerWidth;
@@ -72,10 +74,13 @@ const Canvas = props => {
             }
 
             drawGrid();
-            requestAnimationFrame(animate);
+            animationId = requestAnimationFrame(animate);
         }
-        animate();
 
+        // clean up animation on unmount (prevents double-mount)
+        animationId = requestAnimationFrame(animate);
+
+        return () => cancelAnimationFrame(animationId);
     }, [])
 
     return <canvas ref={canvasRef} {...props}/>
