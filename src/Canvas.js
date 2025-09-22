@@ -25,10 +25,8 @@ const Canvas = props => {
         const grid = Array.from({ length: blockHeight }, (_, y) =>
             Array.from({ length: blockWidth }, (_, x) => ({alpha: 0}))
         );
-        walker.x = 68;
-        walker.y = 31;
-
-        let walkNum = 0;
+        walker.x = 38;
+        walker.y = 18;
 
         function stepWalker() {
             // pick random direction
@@ -41,10 +39,6 @@ const Canvas = props => {
                 case 3: walker.x = Math.min(blockWidth - 1, walker.x + 1); break; // right
             }
 
-            walkNum++;
-
-            console.log(`walker ${walkNum}: (${walker.x}, ${walker.y})`);
-
             grid[walker.y][walker.x].alpha = 1;
         }
 
@@ -55,10 +49,14 @@ const Canvas = props => {
                     const cell = grid[y][x];
                     if(cell.alpha > 0) {
                         // draw rectangle
-                        context.fillStyle = `rgba(255, 182, 193, ${cell.alpha})`;
-                        context.fillRect(x * 15, y * 15, 15, 15);
+                        context.strokeStyle = `rgba(95, 237, 131, ${cell.alpha * 2})`;
+                        context.fillStyle = `rgba(95, 237, 131, ${cell.alpha})`;
+                        context.beginPath();
+                        context.roundRect(x * 20, y * 20, 15, 15, 5);
+                        context.stroke();
+                        context.fill();
                         // fade tile
-                        cell.alpha = Math.max(0, cell.alpha - 0.02);
+                        cell.alpha = Math.max(0, cell.alpha - 0.01);
                     }
                 }
             }
