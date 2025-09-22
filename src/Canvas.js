@@ -5,13 +5,6 @@ const Canvas = props => {
     document.body.style.overflowY = "hidden";
     const canvasRef = useRef(null);
 
-    let walker = {
-        x: 0,
-        y: 0
-    };
-
-    const directions = ['up', 'down', 'left', 'right'];
-
     useEffect(() => {
         let animationId;
 
@@ -25,38 +18,57 @@ const Canvas = props => {
         const grid = Array.from({ length: blockHeight }, (_, y) =>
             Array.from({ length: blockWidth }, (_, x) => ({alpha: 0}))
         );
-        walker.x = 38;
-        walker.y = 18;
 
-        function stepWalker() {
-            // pick random direction
-            const newDirection = Math.floor(Math.random() * directions.length);
-            // eslint-disable-next-line default-case
-            switch(newDirection) {
-                case 0: walker.y = Math.max(0, walker.y - 1); break; // up
-                case 1: walker.y = Math.min(blockHeight - 1, walker.y + 1); break; // down
-                case 2: walker.x = Math.max(0, walker.x - 1); break; // left
-                case 3: walker.x = Math.min(blockWidth - 1, walker.x + 1); break; // right
+        let walkers = Array.from({ length: 169 }, () => ({
+            x: Math.floor(blockWidth * Math.random()),
+            y: Math.floor(blockHeight * Math.random()),
+        }));
+
+        function wienerRandom() {
+            let sum = 0;
+            for (let i = 0; i < 6; i++) {
+                sum += Math.random() - 0.5; // range [-0.5, 0.5]
             }
+            return sum; // mean ~0, variance ~small
+        }
 
-            grid[walker.y][walker.x].alpha = 1;
+        function stepWalkers() {
+            for (const walker of walkers) {
+                walker.x += wienerRandom() * 2;
+                walker.y += wienerRandom() * 2;
+
+                walker.x = Math.max(0, Math.min(blockWidth - 1, Math.round(walker.x)));
+                walker.y = Math.max(0, Math.min(blockHeight - 1, Math.round(walker.y)));
+
+                const cell = grid[walker.y][walker.x];
+                if(cell.alpha < 0.01) {  // only restart if needed, prevent blinking cells
+                    cell.alpha = 0;
+                    cell.growing = true;
+                }
+            }
         }
 
         function drawGrid() {
             context.clearRect(0, 0, canvas.width, canvas.height);
+
             for (let y = 0; y < blockHeight; y++) {
                 for (let x = 0; x < blockWidth; x++) {
                     const cell = grid[y][x];
-                    if(cell.alpha > 0) {
+                    if(cell.alpha > 0 || cell.growing) {
                         // draw rectangle
-                        context.strokeStyle = `rgba(95, 237, 131, ${cell.alpha * 2})`;
-                        context.fillStyle = `rgba(95, 237, 131, ${cell.alpha})`;
+                        context.strokeStyle = `rgba(192,110,255, ${cell.alpha * 3})`;
+                        context.fillStyle = `rgba(192,110,255, ${cell.alpha})`;
                         context.beginPath();
                         context.roundRect(x * 20, y * 20, 15, 15, 5);
                         context.stroke();
                         context.fill();
                         // fade tile
-                        cell.alpha = Math.max(0, cell.alpha - 0.01);
+                        if(cell.growing) {
+                            cell.alpha = Math.min(1, cell.alpha + 0.02);
+                            if(cell.alpha >= 1) cell.growing = false;
+                        } else {
+                            cell.alpha = Math.max(0, cell.alpha - 0.005);
+                        }
                     }
                 }
             }
@@ -67,7 +79,7 @@ const Canvas = props => {
 
         function animate(timestamp) {
             if(timestamp - lastStepTime > stepInterval) {
-                stepWalker();
+                stepWalkers();
                 lastStepTime = timestamp;
             }
 
