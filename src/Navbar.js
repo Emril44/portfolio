@@ -1,3 +1,5 @@
+import './Navbar.css';
+
 function Navbar() {
     return (
         <div className="navbar">
@@ -6,14 +8,10 @@ function Navbar() {
             </div>
             <div className="nav-buttons">
                 <ul className="work-button-list">
-                    <li>Projects</li>
-                    <li>Certifications</li>
-                </ul>
-            </div>
-            <div className="buttons-maybe">
-                <ul className="personal-buttons">
-                    <li>About Me</li>
-                    <li>Contacts</li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#certifications">Certifications</a></li>
+                    <li><a href="#about-me">About Me</a></li>
+                    <li><a href="#contacts">Contacts</a></li>
                 </ul>
             </div>
         </div>

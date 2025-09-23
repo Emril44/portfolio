@@ -15,11 +15,11 @@ const Canvas = props => {
 
         const blockWidth = Math.round(window.innerWidth / 15);
         const blockHeight = Math.round(window.innerHeight / 15);
-        const grid = Array.from({ length: blockHeight }, (_, y) =>
-            Array.from({ length: blockWidth }, (_, x) => ({alpha: 0}))
+        const grid = Array.from({ length: blockHeight }, (_) =>
+            Array.from({ length: blockWidth }, (_) => ({alpha: 0}))
         );
 
-        let walkers = Array.from({ length: 169 }, () => ({
+        let walkers = Array.from({ length: 96 }, () => ({
             x: Math.floor(blockWidth * Math.random()),
             y: Math.floor(blockHeight * Math.random()),
         }));
@@ -56,8 +56,8 @@ const Canvas = props => {
                     const cell = grid[y][x];
                     if(cell.alpha > 0 || cell.growing) {
                         // draw rectangle
-                        context.strokeStyle = `rgba(192,110,255, ${cell.alpha * 3})`;
-                        context.fillStyle = `rgba(192,110,255, ${cell.alpha})`;
+                        context.strokeStyle = `rgba(100, 73, 121, ${cell.alpha * 3})`;
+                        context.fillStyle = `rgba(100, 73, 121, ${cell.alpha})`;
                         context.beginPath();
                         context.roundRect(x * 20, y * 20, 15, 15, 5);
                         context.stroke();
@@ -67,7 +67,7 @@ const Canvas = props => {
                             cell.alpha = Math.min(1, cell.alpha + 0.02);
                             if(cell.alpha >= 1) cell.growing = false;
                         } else {
-                            cell.alpha = Math.max(0, cell.alpha - 0.005);
+                            cell.alpha = Math.max(0, cell.alpha - 0.003);
                         }
                     }
                 }
@@ -75,7 +75,7 @@ const Canvas = props => {
         }
 
         let lastStepTime = 0;
-        const stepInterval = 100; // ms per step
+        const stepInterval = 75; // ms per step
 
         function animate(timestamp) {
             if(timestamp - lastStepTime > stepInterval) {
