@@ -2,24 +2,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1e1e1e;
+    background-color: #0e0e0e;
     color: #fff;
-    padding: 0.05rem;
 }
 
 .logo-ig-idk-lol {
-    font-family: Ubuntu, sans-serif;
+    font-family: "WDXL Lubrifont TC", sans-serif;
     font-size: 1.5rem;
     font-weight: bold;
     color: #fff;
     text-decoration: none;
-    margin-left: 1rem;
+    margin-left: 2rem;
 }
 
 .work-button-list {
     list-style-type: none;
-    margin-right: 7rem;
-    padding: 0;
+    margin-right: 5rem;
     overflow: hidden;
 }
 
@@ -29,9 +27,9 @@ li {
 a {
     color: #9b9b9b;
     display: inline-block;
-    font-family: Ubuntu, sans-serif;
+    font-family: "Rajdhani", sans-serif;
     font-size: 18px;
-    padding: 16px;
+    padding: 10px;
     position: relative;
     text-align: center;
     text-decoration: none;

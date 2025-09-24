@@ -1,17 +1,18 @@
 import './Navbar.css';
+import { Link } from "react-router-dom";
 
 function Navbar() {
     return (
         <div className="navbar">
             <div className="logo-ig-idk-lol">
-                <p>Max's Portfolio</p>
+                <p>Portfolio</p>
             </div>
             <div className="nav-buttons">
                 <ul className="work-button-list">
-                    <li><a href="#projects">Projects</a></li>
-                    <li><a href="#certifications">Certifications</a></li>
-                    <li><a href="#about-me">About Me</a></li>
-                    <li><a href="#contacts">Contacts</a></li>
+                    <li><Link to="/contacts">Contacts</Link></li>
+                    <li><Link to="/about">About Me</Link></li>
+                    <li><Link to="/certifications">Certifications</Link></li>
+                    <li><Link to="/projects">Projects</Link></li>
                 </ul>
             </div>
         </div>

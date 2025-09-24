@@ -19,29 +19,54 @@ const Canvas = props => {
             Array.from({ length: blockWidth }, (_) => ({alpha: 0}))
         );
 
-        let walkers = Array.from({ length: 96 }, () => ({
+        let walkers = Array.from({ length: 169 }, () => ({
             x: Math.floor(blockWidth * Math.random()),
             y: Math.floor(blockHeight * Math.random()),
+            dir: Math.floor(Math.random() * 4), // 0=up,1=down,2=left,3=right
         }));
 
-        function wienerRandom() {
-            let sum = 0;
-            for (let i = 0; i < 6; i++) {
-                sum += Math.random() - 0.5; // range [-0.5, 0.5]
-            }
-            return sum; // mean ~0, variance ~small
-        }
+        // function wienerRandom() {
+        //     let sum = 0;
+        //     for (let i = 0; i < 6; i++) {
+        //         sum += Math.random() - 0.5; // range [-0.5, 0.5]
+        //     }
+        //     return sum; // mean ~0, variance ~small
+        // }
+        //
+        // function stepWalkers() {
+        //     for (const walker of walkers) {
+        //         walker.x += wienerRandom() * 2;
+        //         walker.y += wienerRandom() * 2;
+        //
+        //         walker.x = Math.max(0, Math.min(blockWidth - 1, Math.round(walker.x)));
+        //         walker.y = Math.max(0, Math.min(blockHeight - 1, Math.round(walker.y)));
+        //
+        //         const cell = grid[walker.y][walker.x];
+        //         if(cell.alpha < 0.01) {  // only restart if needed, prevent blinking cells
+        //             cell.alpha = 0;
+        //             cell.growing = true;
+        //         }
+        //     }
+        // }
 
         function stepWalkers() {
             for (const walker of walkers) {
-                walker.x += wienerRandom() * 2;
-                walker.y += wienerRandom() * 2;
+                // small chance to turn (structured but not boring)
+                if (Math.random() < 0.05) {
+                    walker.dir = Math.floor(Math.random() * 4);
+                }
 
-                walker.x = Math.max(0, Math.min(blockWidth - 1, Math.round(walker.x)));
-                walker.y = Math.max(0, Math.min(blockHeight - 1, Math.round(walker.y)));
+                // move in current direction
+                // eslint-disable-next-line default-case
+                switch (walker.dir) {
+                    case 0: walker.y = Math.max(0, walker.y - 1); break;
+                    case 1: walker.y = Math.min(blockHeight - 1, walker.y + 1); break;
+                    case 2: walker.x = Math.max(0, walker.x - 1); break;
+                    case 3: walker.x = Math.min(blockWidth - 1, walker.x + 1); break;
+                }
 
                 const cell = grid[walker.y][walker.x];
-                if(cell.alpha < 0.01) {  // only restart if needed, prevent blinking cells
+                if (cell.alpha < 0.01) {
                     cell.alpha = 0;
                     cell.growing = true;
                 }
@@ -56,8 +81,8 @@ const Canvas = props => {
                     const cell = grid[y][x];
                     if(cell.alpha > 0 || cell.growing) {
                         // draw rectangle
-                        context.strokeStyle = `rgba(100, 73, 121, ${cell.alpha * 3})`;
-                        context.fillStyle = `rgba(100, 73, 121, ${cell.alpha})`;
+                        context.strokeStyle = `rgba(112, 37, 65, ${cell.alpha * 3})`;
+                        context.fillStyle = `rgba(112, 37, 65, ${cell.alpha})`;
                         context.beginPath();
                         context.roundRect(x * 20, y * 20, 15, 15, 5);
                         context.stroke();
@@ -67,7 +92,7 @@ const Canvas = props => {
                             cell.alpha = Math.min(1, cell.alpha + 0.02);
                             if(cell.alpha >= 1) cell.growing = false;
                         } else {
-                            cell.alpha = Math.max(0, cell.alpha - 0.003);
+                            cell.alpha = Math.max(0, cell.alpha - 0.005);
                         }
                     }
                 }
