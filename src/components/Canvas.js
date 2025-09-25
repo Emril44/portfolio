@@ -7,6 +7,7 @@ const Canvas = props => {
 
     useEffect(() => {
         let animationId;
+        let vcrY = 0;
 
         const canvas =  canvasRef.current;
         const context = canvas.getContext("2d");
@@ -51,7 +52,7 @@ const Canvas = props => {
 
         function stepWalkers() {
             for (const walker of walkers) {
-                // small chance to turn (structured but not boring)
+                // small chance to turn
                 if (Math.random() < 0.05) {
                     walker.dir = Math.floor(Math.random() * 4);
                 }
@@ -76,6 +77,7 @@ const Canvas = props => {
         function drawGrid() {
             context.clearRect(0, 0, canvas.width, canvas.height);
 
+            // animate walker babies
             for (let y = 0; y < blockHeight; y++) {
                 for (let x = 0; x < blockWidth; x++) {
                     const cell = grid[y][x];
@@ -96,6 +98,28 @@ const Canvas = props => {
                         }
                     }
                 }
+            }
+
+            // scanlines!!!!!
+            context.fillStyle = "rgba(0, 0, 0, 0.1)";
+            for (let y = 0; y < canvas.height; y += 4) {
+                context.fillRect(0, y, canvas.width, 2);
+            }
+
+            // trying vcr stuff
+            const barHeight = 50;
+            const gradient = context.createLinearGradient(0, vcrY, 0, vcrY + barHeight);
+            gradient.addColorStop(0, "rgba(255, 255, 255, 0.005)");
+            gradient.addColorStop(0, "rgba(255, 255, 255, 0.007)");
+            gradient.addColorStop(1, "rgba(255, 255, 255, 0.005)");
+
+            context.fillStyle = gradient;
+            context.fillRect(0, vcrY, canvas.width, barHeight);
+
+            // move & reset vcr thingy
+            vcrY += 16;
+            if(vcrY > canvas.height) {
+                vcrY = -barHeight;
             }
         }
 
