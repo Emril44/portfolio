@@ -6,7 +6,7 @@
     color: #fff;
 }
 
-.logo-ig-idk-lol {
+.logo-ig-idk-lol a {
     font-family: "WDXL Lubrifont TC", sans-serif;
     font-size: 1.5rem;
     font-weight: bold;
@@ -21,10 +21,10 @@
     overflow: hidden;
 }
 
-li {
+.work-button-list li {
     float: right;
 }
-a {
+.work-button-list a {
     color: #9b9b9b;
     display: inline-block;
     font-family: "Rajdhani", sans-serif;
@@ -35,10 +35,10 @@ a {
     text-decoration: none;
     transition: color .15s ease;
 }
-a:hover {
+.work-button-list a:hover {
     color: white;
 }
-a::before {
+.work-button-list a::before {
     content: "";
     position: absolute;
     display: block;
@@ -50,6 +50,6 @@ a::before {
     transform: scaleX(0);
     transition: transform .15s ease;
 }
-a:hover::before {
+.work-button-list a:hover::before {
     transform: scaleX(1);
 }

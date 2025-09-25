@@ -5,7 +5,7 @@ function Navbar() {
     return (
         <div className="navbar">
             <div className="logo-ig-idk-lol">
-                <p>Portfolio</p>
+                <p><Link to="/">Portfolio</Link></p>
             </div>
             <div className="nav-buttons">
                 <ul className="work-button-list">
