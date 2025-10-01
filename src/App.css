@@ -1,6 +1,5 @@
 .App {
   text-align: center;
-  background-color: #111111;
 }
 
 body {
@@ -14,11 +13,11 @@ body {
   margin: 2px !important;
   padding: 0 !important;
   position: fixed;
-  background-color: #111111;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   display: block;
-  z-index: -2;
+  background: #111111;
+  z-index: -1;
 }
