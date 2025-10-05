@@ -1,0 +1,25 @@
+.contact-section {
+    text-align: center;
+    font-family: Rajdhani, sans-serif;
+    font-size: 18px;
+    color: #dcdcdc;
+    margin: 8rem auto;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+.contact-link {
+    color: #c9346d;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.contact-link:hover {
+    color: #ff66cc;
+}
