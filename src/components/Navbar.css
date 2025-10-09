@@ -15,6 +15,58 @@
     margin-left: 2rem;
 }
 
+.logo-ig-idk-lol a:hover {
+    animation: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+    0%, 100% {
+        text-shadow: 0 0 2px #c9346d, 0 0 4px #c9346d;
+    }
+    50% {
+        text-shadow: 0 0 4px #ff66cc, 0 0 10px #ff66cc;
+    }
+}
+.logo {
+    animation: glow 2s ease-in-out infinite;
+}
+
+.logo-ig-idk-lol::before, .logo-ig-idk-lol::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #c9346d;
+    clip: rect(0, 0, 0, 0);
+}
+
+.logo-ig-idk-lol::before {
+    left: 2px;
+    text-shadow: -2px 0 #67e3f3;
+    animation: glitchBefore 2s infinite linear alternate-reverse;
+}
+
+.logo-ig-idk-lol::after {
+    left: -2px;
+    text-shadow: 2px 0 #02d8f3;
+    animation: glitchAfter 2s infinite linear alternate-reverse;
+}
+
+@keyframes glitchBefore {
+    0% { clip: rect(0, 9999px, 0, 0); }
+    10% { clip: rect(5px, 9999px, 50px, 0); }
+    20% { clip: rect(20px, 9999px, 30px, 0); }
+    30% { clip: rect(10px, 9999px, 60px, 0); }
+    100% { clip: rect(0, 9999px, 0, 0); }
+}
+
+@keyframes glitchAfter {
+    0% { clip: rect(10px, 9999px, 40px, 0); }
+    20% { clip: rect(20px, 9999px, 30px, 0); }
+    40% { clip: rect(0px, 9999px, 60px, 0); }
+    100% { clip: rect(0, 9999px, 0, 0); }
+}
+
 .work-button-list {
     list-style-type: none;
     margin-right: 5rem;
