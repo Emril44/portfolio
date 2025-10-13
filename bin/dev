@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# basic script to run frontend and backend
+
+# if command exits with non-zero status, exit
+set -e
+
+# go to project root (if it's run from somewhere else
+cd "$(dirname "$0")/.."
+
+# ctrl + c cleanly kills both
+trap 'kill $(jobs -p)' EXIT
+
+# start backend
+(
+  cd backend
+  mvn spring-boot:run
+) &
+
+# start frontend
+(
+  cd frontend
+  npm start
+) &
+
+# wait for both processes to finish
+wait
