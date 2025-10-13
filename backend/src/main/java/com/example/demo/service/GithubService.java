@@ -1,52 +1,71 @@
 package com.example.demo.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
-
 @Service
 public class GithubService {
-    private static final String GITHUB_GRAPHQL_URL = "https://api.github.com/graphql";
 
     @Value("${github.token}")
-    private String gitHubToken;
+    private String githubToken;
 
     private final RestTemplate restTemplate = new RestTemplate();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public String fetchRepositories() {
         String query = """
             {
-              viewer {
-                repositories(first: 5, orderBy: {field: UPDATED_AT, direction: DESC}) {
-                  nodes {
-                    name
-                    url
-                    description
-                    stargazerCount
+              user(login: "Emril44") {
+                pinnedItems(first: 6, types: REPOSITORY) {
+                  edges {
+                    node {
+                      ... on Repository {
+                        name
+                        description
+                        url
+                        stargazerCount
+                        primaryLanguage {
+                          name
+                          color
+                        }
+                      }
+                    }
                   }
                 }
               }
             }
             """;
 
+        // wrap the query in a JSON payload
+        String requestBody = String.format("{\"query\": \"%s\"}", query.replace("\"", "\\\"").replace("\n", " "));
+
+        // set up headers
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(gitHubToken);
+        headers.setBearerAuth(githubToken);
 
-        Map<String, String> body = Map.of("query", query);
+        HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
 
-        HttpEntity<Map<String, String>> entity = new HttpEntity<>(body,headers);
-
+        // send off POST request
         ResponseEntity<String> response = restTemplate.exchange(
-                GITHUB_GRAPHQL_URL,
+                "https://api.github.com/graphql",
                 HttpMethod.POST,
                 entity,
                 String.class
         );
 
-        return response.getBody();
+        // parse and clean up the response a lil
+        try {
+            JsonNode root = objectMapper.readTree(response.getBody());
+            JsonNode pinned = root.path("data").path("user").path("pinnedItems").path("edges");
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pinned);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{\"error\":\"Failed to parse response\"}";
+        }
     }
 }
