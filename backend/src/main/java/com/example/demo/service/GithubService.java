@@ -28,31 +28,7 @@ public class GithubService {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<GithubRepo> fetchRepositories() {
-        String query = """
-            {
-              user(login: "Emril44") {
-                pinnedItems(first: 6, types: REPOSITORY) {
-                  edges {
-                    node {
-                      ... on Repository {
-                        name
-                        description
-                        url
-                        stargazerCount
-                        primaryLanguage {
-                          name
-                          color
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            """;
-
-        // wrap the query in a JSON payload
-        String requestBody = String.format("{\"query\": \"%s\"}", query.replace("\"", "\\\"").replace("\n", " "));
+        String requestBody = getRequestBody();
 
         // set up headers
         HttpHeaders headers = new HttpHeaders();
@@ -105,5 +81,33 @@ public class GithubService {
         } catch (JsonProcessingException e) {
             throw new RuntimeException("Unable to process JSON", e);
         }
+    }
+
+    private static String getRequestBody() {
+        String query = """
+            {
+              user(login: "Emril44") {
+                pinnedItems(first: 6, types: REPOSITORY) {
+                  edges {
+                    node {
+                      ... on Repository {
+                        name
+                        description
+                        url
+                        stargazerCount
+                        primaryLanguage {
+                          name
+                          color
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            """;
+
+        // wrap the query in a JSON payload
+        return String.format("{\"query\": \"%s\"}", query.replace("\"", "\\\"").replace("\n", " "));
     }
 }

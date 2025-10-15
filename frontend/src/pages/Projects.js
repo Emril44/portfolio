@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./Projects.css";
+import { toast } from 'react-toastify';
 
 function Projects() {
     const [repos, setRepos] = useState([]);
@@ -14,10 +15,12 @@ function Projects() {
             })
             .then(data => {
                 setRepos(data);
+                toast.success("Projects loaded");
                 setLoading(false);
             })
             .catch(err => {
                 console.error(err);
+                toast.error("Failed to load projects")
                 setError("Backend is still asleep - try again in a moment!");
                 setLoading(false);
             });
@@ -38,7 +41,7 @@ function Projects() {
 
     return (
         <div className="projects-container">
-            <h1 className="projects-header">My Projects</h1>
+            <h1 className="projects-header">MY PROJECTS</h1>
             <div className="projects-list">
                 {repos.map(({ node }) => (
                     <a

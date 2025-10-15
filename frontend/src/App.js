@@ -6,6 +6,8 @@ import Certifications from "./pages/Certifications";
 import About from "./pages/About";
 import Contacts from "./pages/Contacts";
 import Main from "./pages/Main";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     return (
@@ -19,6 +21,8 @@ function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/contacts" element={<Contacts />} />
                 </Routes>
+
+                <ToastContainer />
             </div>
         </Router>
     )
