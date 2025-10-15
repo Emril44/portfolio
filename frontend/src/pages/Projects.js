@@ -3,13 +3,38 @@ import "./Projects.css";
 
 function Projects() {
     const [repos, setRepos] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetch("http://localhost:8080/api/github/repos")
-            .then(res => res.json())
-            .then(data => setRepos(data))
-            .catch(err => console.error("Failed to fetch repos: ", err));
+            .then(res => {
+                if(!res.ok) throw new Error("Failed to fetch repos");
+                return res.json();
+            })
+            .then(data => {
+                setRepos(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setError("Backend is still asleep - try again in a moment!");
+                setLoading(false);
+            });
     }, []);
+
+    if(loading) {
+        return (
+            <div className="loading-container">
+                <div className="loading-speen"></div>
+                <p>Loading projects...</p>
+            </div>
+        );
+    }
+
+    if(error) {
+        return <p className="error">Error: {error}</p>
+    }
 
     return (
         <div className="projects-container">
