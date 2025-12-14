@@ -8,6 +8,7 @@ import Contacts from "./pages/Contacts";
 import Main from "./pages/Main";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './components/Toastify.css'
 
 function App() {
     return (
@@ -22,7 +23,16 @@ function App() {
                     <Route path="/contacts" element={<Contacts />} />
                 </Routes>
 
-                <ToastContainer />
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    pauseOnHover
+                    draggable
+                    theme="dark"
+                />
             </div>
         </Router>
     )
