@@ -85,10 +85,10 @@ function Projects() {
                     >
                         <div className="project-header">
                             <h2>{repo.name}</h2>
-                            {repo.primaryLanguage && (
+                            {repo.languageName && (
                                 <span
                                     className="language-dot"
-                                    style={{ backgroundColor: repo.primaryLanguage.color }}
+                                    style={{ backgroundColor: repo.languageColor }}
                                 />
                             )}
                         </div>
@@ -99,8 +99,8 @@ function Projects() {
                         )}
                         <div className="project-footer">
                             <span>Stargazers: {repo.stargazerCount}</span>
-                            {repo.primaryLanguage && (
-                                <span>{repo.primaryLanguage.name}</span>
+                            {repo.languageName && (
+                                <span>{repo.languageName}</span>
                             )}
                         </div>
                     </a>
