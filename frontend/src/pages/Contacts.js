@@ -1,7 +1,8 @@
 import "./Contacts.css";
+import ContactForm from "../components/ContactForm";
 
 function Contacts() {
-    return (
+        return (
         <div className="contact-section">
             <h2 className="section-header">Contact Me</h2>
             <p className="contact-text">
@@ -14,6 +15,11 @@ function Contacts() {
                 <a href="https://www.linkedin.com/in/maksym-khomenko-887654262" target="_blank" rel="noreferrer"
                    className="contact-link">LinkedIn</a>
             </div>
+
+            <p className="contact-text">
+                ...Or reach out directly!
+            </p>
+            <ContactForm/>
         </div>
     )
 }
