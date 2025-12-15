@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from "react";
-//import "./Certifications.css";
+import "./Certifications.css";
 import {toast} from "react-toastify";
 
 function Certifications() {
