@@ -12,6 +12,8 @@ function Projects() {
         if(hasFetched.current) return;
         hasFetched.current = true;
 
+        console.log("API URL:", process.env.REACT_APP_API_URL);
+
         fetch(`${process.env.REACT_APP_API_URL}/api/github/repos`)
             .then(res => {
                 if(!res.ok) throw new Error("Failed to fetch repos");
