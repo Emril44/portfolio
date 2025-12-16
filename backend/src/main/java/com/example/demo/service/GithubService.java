@@ -33,6 +33,11 @@ public class GithubService {
         // set up headers
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+
+        if (githubToken == null || githubToken.isBlank()) {
+            throw new IllegalStateException("GitHub token not configured");
+        }
+
         headers.setBearerAuth(githubToken);
 
         HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
