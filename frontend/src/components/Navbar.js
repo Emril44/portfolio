@@ -5,6 +5,7 @@ function Navbar() {
     return (
         <div className="navbar">
             <div className="logo-ig-idk-lol">
+                {/* eslint-disable-next-line react/jsx-no-comment-textnodes */}
                 <p><Link to="/">//:PORTFOLIO</Link></p>
             </div>
             <div className="nav-buttons">
