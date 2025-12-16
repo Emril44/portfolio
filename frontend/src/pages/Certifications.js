@@ -12,7 +12,7 @@ function Certifications() {
         if(hasFetched.current) return;
         hasFetched.current = true;
 
-        fetch("http://localhost:8080/api/certifications")
+        fetch(`${process.env.REACT_APP_API_URL}/api/certifications`)
             .then(res => {
                 if(!res.ok) throw new Error("Failed to fetch certificates");
                 return res.json();

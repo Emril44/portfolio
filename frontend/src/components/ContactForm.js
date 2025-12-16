@@ -18,7 +18,7 @@ function ContactForm() {
         e.preventDefault();
         setLoading(true);
 
-        fetch("http://localhost:8080/api/contact", {
+        fetch(`${process.env.REACT_APP_API_URL}/api/contact`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(form)
