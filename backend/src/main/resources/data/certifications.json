@@ -4,27 +4,27 @@
     "title": "IELTS Test Report Form",
     "issuer": "IELTS",
     "year": 2025,
-    "fileUrl": "http://localhost:8080/certificates/07_englishproof_khomenko_maksym_2025.pdf"
+    "fileUrl": "/certificates/07_englishproof_khomenko_maksym_2025.pdf"
   },
   {
     "id": "ibm-linux",
     "title": "Hands-on Introduction to Linux Commands and\nShell Scripting",
     "issuer": "IBM, Coursera",
     "year": 2025,
-    "fileUrl": "http://localhost:8080/certificates/Coursera_0K6KZ7ZCAXT6.pdf"
+    "fileUrl": "/certificates/Coursera_0K6KZ7ZCAXT6.pdf"
   },
   {
     "id": "ibm-devops",
     "title": "Introduction to DevOps",
     "issuer": "IBM, Coursera",
     "year": 2025,
-    "fileUrl": "http://localhost:8080/certificates/Coursera_GOIDOPP1ASWO.pdf"
+    "fileUrl": "/certificates/Coursera_GOIDOPP1ASWO.pdf"
   },
   {
     "id": "ibm-cloud",
     "title": "Introduction to Cloud Computing",
     "issuer": "IBM, Coursera",
     "year": 2025,
-    "fileUrl": "http://localhost:8080/certificates/Coursera_UDC4Q1MILOZB.pdf"
+    "fileUrl": "/certificates/Coursera_UDC4Q1MILOZB.pdf"
   }
 ]
