@@ -13,7 +13,7 @@ public class ContactService {
     @Value("${contact.email}")
     private String myEmail;
 
-        public ContactService(JavaMailSender mailSender, @Value("${contact.mail}") String myEmail) {
+        public ContactService(JavaMailSender mailSender, @Value("${contact.email}") String myEmail) {
         this.mailSender = mailSender;
         this.myEmail = myEmail;
     }
