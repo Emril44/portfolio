@@ -4,6 +4,7 @@ import com.example.demo.model.ContactMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 
@@ -18,6 +19,7 @@ public class ContactService {
         this.myEmail = myEmail;
     }
 
+    @Async
     public void handle(ContactMessage message) {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setTo(myEmail);
