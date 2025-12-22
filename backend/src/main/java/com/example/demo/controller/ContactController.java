@@ -17,6 +17,11 @@ public class ContactController {
 
     @PostMapping
     public ResponseEntity<?> submitContact(@Valid @RequestBody ContactMessage message) {
+        if (message.getCompany() != null && !message.getCompany().isBlank()) {
+            // pretend success
+            return ResponseEntity.ok("Message received");
+        }
+
         contactService.handle(message);
 
         return ResponseEntity.ok("Message received");

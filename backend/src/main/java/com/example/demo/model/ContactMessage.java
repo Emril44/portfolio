@@ -14,6 +14,9 @@ public class ContactMessage {
     @NotBlank
     private String message;
 
+    // hehe
+
+    private String company;
     public String getName() {
         return name;
     }
@@ -36,5 +39,13 @@ public class ContactMessage {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
     }
 }

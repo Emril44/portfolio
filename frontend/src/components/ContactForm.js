@@ -56,6 +56,14 @@ function ContactForm() {
                 required
             />
 
+            <input
+                type="text"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                style={{display: "none"}}
+            />
+
             <textarea
                 name="message"
                 placeholder="Your message"
