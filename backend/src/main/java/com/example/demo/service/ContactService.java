@@ -1,20 +1,38 @@
 package com.example.demo.service;
 
 import com.example.demo.model.ContactMessage;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class ContactService {
-    private final List<ContactMessage> messages = new ArrayList<>();
+    private final JavaMailSender mailSender;
+    @Value("${contact.email}")
+    private String myEmail;
 
-    public void save(ContactMessage message) {
-        messages.add(message);
+        public ContactService(JavaMailSender mailSender, @Value("${contact.mail}") String myEmail) {
+        this.mailSender = mailSender;
+        this.myEmail = myEmail;
     }
 
-    public List<ContactMessage> getAll() {
-        return messages;
+    public void handle(ContactMessage message) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setTo(myEmail);
+        mail.setSubject("New message from Portfolio!");
+        mail.setText("""
+                Name: %s
+                Email: %s
+                
+                %s
+                """.formatted(
+                        message.getName(),
+                        message.getEmail(),
+                        message.getMessage()
+        ));
+
+        mailSender.send(mail);
     }
 }
