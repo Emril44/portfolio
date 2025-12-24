@@ -7,6 +7,8 @@ function Projects() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const hasFetched = useRef(false);
+    const [sortBy, setSortBy] = useState("newest");
+    const [techFilter, setTechFilter] = useState("all");
 
     useEffect(() => {
         if(hasFetched.current) return;
@@ -60,6 +62,35 @@ function Projects() {
             });
     }, []);
 
+    const visibleRepos = React.useMemo(() => {
+        let result = [...repos];
+
+        //language filter
+        if(techFilter !== "all") {
+            result = result.filter(
+                repo => repo.languageName === techFilter
+            );
+        }
+
+        switch (sortBy) {
+            case "stars":
+                result.sort((a,b) => b.stargazerCount - a.stargazerCount);
+                break;
+            case "mame":
+                result.sort((a,b) => a.name.localeCompare(b.name))
+                break;
+            case "language":
+                result.sort((a,b) =>
+                    (a.languageName || "").localeCompare(b.languageName || "")
+                );
+                break;
+            default:
+                break;
+        }
+
+        return result;
+    }, [repos, sortBy, techFilter]);
+
     if(loading) {
         return (
             <div className="loading-container">
@@ -76,8 +107,22 @@ function Projects() {
     return (
         <div className="projects-container">
             <h1 className="projects-header">MY PROJECTS</h1>
+            <div className="projects-controls">
+                <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
+                    <option value="stars">Sort by stars</option>
+                    <option value="name">Sort by name</option>
+                    <option value="language">Sort by language</option>
+                </select>
+
+                <select value={techFilter} onChange={e => setTechFilter(e.target.value)}>
+                    <option value="all">All technologies</option>
+                    <option value="Java">Java</option>
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="TypeScript">TypeScript</option>
+                </select>
+            </div>
             <div className="projects-list">
-                {repos.map(repo => (
+                {visibleRepos.map(repo => (
                     <a
                         key={repo.name}
                         href={repo.url}
@@ -90,7 +135,7 @@ function Projects() {
                             {repo.languageName && (
                                 <span
                                     className="language-dot"
-                                    style={{ backgroundColor: repo.languageColor }}
+                                    style={{backgroundColor: repo.languageColor}}
                                 />
                             )}
                         </div>
@@ -106,7 +151,7 @@ function Projects() {
                             )}
                         </div>
                     </a>
-                    ))}
+                ))}
             </div>
         </div>
     );
