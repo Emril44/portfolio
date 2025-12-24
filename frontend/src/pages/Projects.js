@@ -77,7 +77,7 @@ function Projects() {
                 result.sort((a,b) => b.stargazerCount - a.stargazerCount);
                 break;
             case "mame":
-                result.sort((a,b) => a.name.localeCompare(b.name))
+                result.sort((a,b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
                 break;
             case "language":
                 result.sort((a,b) =>
