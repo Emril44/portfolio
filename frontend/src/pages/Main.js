@@ -20,7 +20,14 @@ function Main() {
             }}>
                 <HeroCard>
                     <div className="hero-layout">
-                        <img src={myface} alt="Portrait of Max" className="portrait" />
+                        <img
+                            src={myface}
+                            alt="Portrait of Max"
+                            className="portrait"
+                            loading="lazy"
+                            width="350"
+                            height="350"
+                        />
                         <div className="hero-text">
                             <h1 className="hero-header1">Hello, I’m Max.</h1>
                             <h2 className="hero-header2">I build clean, efficient, and creative solutions in web development.</h2>

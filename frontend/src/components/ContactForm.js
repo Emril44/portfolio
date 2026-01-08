@@ -1,5 +1,5 @@
 import {toast} from "react-toastify";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import "./ContactForm.css"
 
 function ContactForm() {
@@ -9,6 +9,7 @@ function ContactForm() {
         message: ""
     });
     const [loading, setLoading] = useState(false);
+    const debTime = useRef(null);
 
     const handleChange = e => {
         setForm({...form, [e.target.name]: e.target.value});
@@ -18,23 +19,27 @@ function ContactForm() {
         e.preventDefault();
         setLoading(true);
 
-        fetch(`${process.env.REACT_APP_API_URL}/api/contact`, {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(form)
-        })
-            .then(res => {
-                if (!res.ok) throw new Error("Failed to send message");
-                return res.text();
+        if(debTime.current) clearTimeout(debTime.current);
+
+        debTime.current = setTimeout(() => {
+            fetch(`${process.env.REACT_APP_API_URL}/api/contact`, {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(form)
             })
-            .then(() => {
-                toast.success("Message sent!");
-                setForm({name: "", email: "", message: ""})
-            })
-            .catch(() => {
-                toast.error("Could not send message");
-            })
-            .finally(() => setLoading(false));
+                .then(res => {
+                    if (!res.ok) throw new Error("Failed to send message");
+                    return res.text();
+                })
+                .then(() => {
+                    toast.success("Message sent!");
+                    setForm({name: "", email: "", message: ""})
+                })
+                .catch(() => {
+                    toast.error("Could not send message");
+                })
+                .finally(() => setLoading(false));
+        }, 500);
     };
 
     return (

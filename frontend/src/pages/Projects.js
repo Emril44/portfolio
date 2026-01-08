@@ -14,8 +14,6 @@ function Projects() {
         if(hasFetched.current) return;
         hasFetched.current = true;
 
-        console.log("API URL:", process.env.REACT_APP_API_URL);
-
         fetch(`${process.env.REACT_APP_API_URL}/api/github/repos`)
             .then(res => {
                 if(!res.ok) throw new Error("Failed to fetch repos");
@@ -76,7 +74,7 @@ function Projects() {
             case "stars":
                 result.sort((a,b) => b.stargazerCount - a.stargazerCount);
                 break;
-            case "mame":
+            case "name":
                 result.sort((a,b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()))
                 break;
             case "language":
